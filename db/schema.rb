@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512183826) do
+ActiveRecord::Schema.define(version: 20150512214529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "games", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer  "user_id"
@@ -37,6 +43,21 @@ ActiveRecord::Schema.define(version: 20150512183826) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "option_values", force: :cascade do |t|
+    t.integer "option_id", null: false
+    t.string  "value"
+  end
+
+  add_index "option_values", ["option_id"], name: "index_option_values_on_option_id", using: :btree
+
+  create_table "options", force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.string  "name"
+    t.string  "type",    null: false
+  end
+
+  add_index "options", ["game_id"], name: "index_options_on_game_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
