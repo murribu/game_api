@@ -8,6 +8,6 @@ development:
   <<: *default
   database: game_api_dev
 
-  test:
+test:
   <<: *default
   database: game_api_test

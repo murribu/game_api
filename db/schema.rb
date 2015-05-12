@@ -11,10 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512135710) do
+ActiveRecord::Schema.define(version: 20150512183826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "oauth_access_tokens", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "oauth_application_id", null: false
+    t.string   "token",                null: false
+    t.string   "scope"
+    t.datetime "expires_at"
+    t.datetime "revoked_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth_access_tokens", ["oauth_application_id"], name: "index_oauth_access_tokens_on_oauth_application_id", using: :btree
+  add_index "oauth_access_tokens", ["user_id"], name: "index_oauth_access_tokens_on_user_id", using: :btree
+
+  create_table "oauth_applications", force: :cascade do |t|
+    t.string   "name",         null: false
+    t.string   "secret",       null: false
+    t.string   "redirect_uri", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -29,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150512135710) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "twitter_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
