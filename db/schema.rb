@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512214529) do
+ActiveRecord::Schema.define(version: 20150513135403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,9 +52,9 @@ ActiveRecord::Schema.define(version: 20150512214529) do
   add_index "option_values", ["option_id"], name: "index_option_values_on_option_id", using: :btree
 
   create_table "options", force: :cascade do |t|
-    t.integer "game_id", null: false
+    t.integer "game_id",     null: false
     t.string  "name"
-    t.string  "type",    null: false
+    t.string  "option_type", null: false
   end
 
   add_index "options", ["game_id"], name: "index_options_on_game_id", using: :btree
