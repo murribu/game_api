@@ -19,7 +19,9 @@ class ApplicationController < ActionController::API
         case auth_token.scope
         when 'master'
           true
-        #Add more scopes when needed
+        when 'user'
+          @oauth_application = auth_token.oauth_application
+          @auth_user = auth_token.user
         else
           authentication_error
         end
