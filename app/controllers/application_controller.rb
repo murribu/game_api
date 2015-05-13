@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authenticate_user_from_token!
+  before_action :authenticate_user_from_token
   respond_to :json
   
   def authenticate_user_from_token
@@ -15,16 +15,20 @@ class ApplicationController < ActionController::API
   private
     def authenticate_with_auth_token auth_token_str
       auth_token = OauthAccessToken.where(token: auth_token_str).first
-      case auth_token.scope 
-      when 'master'
-        true
-      #Add more scopes
+      if auth_token
+        case auth_token.scope
+        when 'master'
+          true
+        #Add more scopes when needed
+        else
+          authentication_error
+        end
       else
         authentication_error
       end
     end
     
     def authentication_error
-      render json: {error: t('unauthorized')}, status: 401
+      render json: {error: 'unauthorized'}, status: 401
     end
 end
