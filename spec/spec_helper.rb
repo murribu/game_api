@@ -25,6 +25,8 @@ RSpec.configure do |config|
     Rails.application.load_seed
   end
   config.include FactoryGirl::Syntax::Methods
+  config.include SessionHelper, type: :request
+  config.include RequestsHelper, type: :request
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

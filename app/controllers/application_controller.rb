@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   
   private
     def authenticate_with_auth_token auth_token_str
-      auth_token = OauthAccessToken.where(token: auth_token_str).first
+      auth_token = OauthAccessToken.includes(:oauth_application).where(token: auth_token_str).first
       if auth_token
         case auth_token.scope
         when 'master'
