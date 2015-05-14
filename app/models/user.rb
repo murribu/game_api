@@ -4,4 +4,5 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :oauth_access_tokens
+  has_many :game_instances
 end

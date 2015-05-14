@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513135403) do
+ActiveRecord::Schema.define(version: 20150514205912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_instance_option_values", force: :cascade do |t|
+    t.integer  "game_instance_id", null: false
+    t.integer  "option_value_id",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "game_instance_option_values", ["game_instance_id"], name: "index_game_instance_option_values_on_game_instance_id", using: :btree
+  add_index "game_instance_option_values", ["option_value_id"], name: "index_game_instance_option_values_on_option_value_id", using: :btree
+
+  create_table "game_instance_tables", force: :cascade do |t|
+    t.integer  "game_id",    null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "game_instance_tables", ["game_id"], name: "index_game_instance_tables_on_game_id", using: :btree
+  add_index "game_instance_tables", ["user_id"], name: "index_game_instance_tables_on_user_id", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.string   "name",       null: false
@@ -45,16 +65,20 @@ ActiveRecord::Schema.define(version: 20150513135403) do
   end
 
   create_table "option_values", force: :cascade do |t|
-    t.integer "option_id", null: false
-    t.string  "value"
+    t.integer  "option_id",  null: false
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "option_values", ["option_id"], name: "index_option_values_on_option_id", using: :btree
 
   create_table "options", force: :cascade do |t|
-    t.integer "game_id",     null: false
-    t.string  "name"
-    t.string  "option_type", null: false
+    t.integer  "game_id",     null: false
+    t.string   "name"
+    t.string   "option_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "options", ["game_id"], name: "index_options_on_game_id", using: :btree
