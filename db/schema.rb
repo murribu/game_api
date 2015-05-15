@@ -11,36 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515180925) do
+ActiveRecord::Schema.define(version: 20150515211027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "game_instance_option_values", force: :cascade do |t|
+  create_table "games", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+  end
+
+  create_table "guessing_game_instance_option_values", force: :cascade do |t|
     t.integer  "game_instance_id", null: false
     t.integer  "option_value_id",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "game_instance_option_values", ["game_instance_id"], name: "index_game_instance_option_values_on_game_instance_id", using: :btree
-  add_index "game_instance_option_values", ["option_value_id"], name: "index_game_instance_option_values_on_option_value_id", using: :btree
+  add_index "guessing_game_instance_option_values", ["game_instance_id"], name: "index_guessing_game_instance_option_values_on_game_instance_id", using: :btree
+  add_index "guessing_game_instance_option_values", ["option_value_id"], name: "index_guessing_game_instance_option_values_on_option_value_id", using: :btree
 
-  create_table "game_instances", force: :cascade do |t|
+  create_table "guessing_game_instances", force: :cascade do |t|
     t.integer  "game_id",    null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "answer"
   end
 
-  add_index "game_instances", ["game_id"], name: "index_game_instances_on_game_id", using: :btree
-  add_index "game_instances", ["user_id"], name: "index_game_instances_on_user_id", using: :btree
-
-  create_table "games", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "guessing_game_instances", ["game_id"], name: "index_guessing_game_instances_on_game_id", using: :btree
+  add_index "guessing_game_instances", ["user_id"], name: "index_guessing_game_instances_on_user_id", using: :btree
 
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer  "user_id"
