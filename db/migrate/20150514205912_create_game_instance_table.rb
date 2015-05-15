@@ -6,8 +6,8 @@ class CreateGameInstanceTable < ActiveRecord::Migration
       t.timestamps
     end
     create_table :game_instance_option_values do |t|
-      t.references :game_instance,  index: true, :null => false
-      t.references :option_value,   index: true, :null => false
+      t.references  :game_instance,  index: true, :null => false
+      t.references  :option_value,   index: true, :null => false
       t.timestamps
     end
     add_timestamps(:options)

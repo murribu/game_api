@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514205912) do
+ActiveRecord::Schema.define(version: 20150515180925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,15 +26,15 @@ ActiveRecord::Schema.define(version: 20150514205912) do
   add_index "game_instance_option_values", ["game_instance_id"], name: "index_game_instance_option_values_on_game_instance_id", using: :btree
   add_index "game_instance_option_values", ["option_value_id"], name: "index_game_instance_option_values_on_option_value_id", using: :btree
 
-  create_table "game_instance_tables", force: :cascade do |t|
+  create_table "game_instances", force: :cascade do |t|
     t.integer  "game_id",    null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "game_instance_tables", ["game_id"], name: "index_game_instance_tables_on_game_id", using: :btree
-  add_index "game_instance_tables", ["user_id"], name: "index_game_instance_tables_on_user_id", using: :btree
+  add_index "game_instances", ["game_id"], name: "index_game_instances_on_game_id", using: :btree
+  add_index "game_instances", ["user_id"], name: "index_game_instances_on_user_id", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.string   "name",       null: false
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20150514205912) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_default"
   end
 
   add_index "option_values", ["option_id"], name: "index_option_values_on_option_id", using: :btree
