@@ -1,5 +1,5 @@
 class ChangeGameInstanceTableName < ActiveRecord::Migration
   def change
-    rename_table :game_instance_tables, :game_instances
+    rename_table :guessing_game_instance_tables, :guessing_game_instances
   end
 end

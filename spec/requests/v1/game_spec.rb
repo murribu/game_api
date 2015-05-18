@@ -8,7 +8,7 @@ describe "Instantiating a game" do
   end
   
   it "returns game info" do
-    post_with_token "/v1/games/1/start", {'options' => {'1' => '2'}}, {'Authorization' => @user_auth_token}
-    expect(response.body).to match(/"game_id"/)
+    post_with_token "/v1/guessing_games/1/start", {'options' => {'1' => '2'}}, {'Authorization' => @user_auth_token}
+    expect(response.body).to match(/"guessing_game_id"/)
   end
 end

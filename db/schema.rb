@@ -16,27 +16,47 @@ ActiveRecord::Schema.define(version: 20150515180925) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "game_instance_option_values", force: :cascade do |t|
-    t.integer  "game_instance_id", null: false
-    t.integer  "option_value_id",  null: false
+  create_table "guessing_game_instance_option_values", force: :cascade do |t|
+    t.integer  "guessing_game_instance_id",     null: false
+    t.integer  "guessing_game_option_value_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "game_instance_option_values", ["game_instance_id"], name: "index_game_instance_option_values_on_game_instance_id", using: :btree
-  add_index "game_instance_option_values", ["option_value_id"], name: "index_game_instance_option_values_on_option_value_id", using: :btree
+  add_index "guessing_game_instance_option_values", ["guessing_game_instance_id"], name: "index_guessing_game_instance_option_values_to_instance", using: :btree
+  add_index "guessing_game_instance_option_values", ["guessing_game_option_value_id"], name: "index_guessing_game_instance_option_values_to_option_values", using: :btree
 
-  create_table "game_instances", force: :cascade do |t|
-    t.integer  "game_id",    null: false
-    t.integer  "user_id",    null: false
+  create_table "guessing_game_instances", force: :cascade do |t|
+    t.integer  "guessing_game_id", null: false
+    t.integer  "user_id",          null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "game_instances", ["game_id"], name: "index_game_instances_on_game_id", using: :btree
-  add_index "game_instances", ["user_id"], name: "index_game_instances_on_user_id", using: :btree
+  add_index "guessing_game_instances", ["guessing_game_id"], name: "index_guessing_game_instances_on_guessing_game_id", using: :btree
+  add_index "guessing_game_instances", ["user_id"], name: "index_guessing_game_instances_on_user_id", using: :btree
 
-  create_table "games", force: :cascade do |t|
+  create_table "guessing_game_option_values", force: :cascade do |t|
+    t.integer  "guessing_game_option_id", null: false
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_default"
+  end
+
+  add_index "guessing_game_option_values", ["guessing_game_option_id"], name: "index_guessing_game_option_values_on_guessing_game_option_id", using: :btree
+
+  create_table "guessing_game_options", force: :cascade do |t|
+    t.integer  "guessing_game_id", null: false
+    t.string   "name"
+    t.string   "option_type",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "guessing_game_options", ["guessing_game_id"], name: "index_guessing_game_options_on_guessing_game_id", using: :btree
+
+  create_table "guessing_games", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -63,26 +83,6 @@ ActiveRecord::Schema.define(version: 20150515180925) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "option_values", force: :cascade do |t|
-    t.integer  "option_id",  null: false
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "is_default"
-  end
-
-  add_index "option_values", ["option_id"], name: "index_option_values_on_option_id", using: :btree
-
-  create_table "options", force: :cascade do |t|
-    t.integer  "game_id",     null: false
-    t.string   "name"
-    t.string   "option_type", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "options", ["game_id"], name: "index_options_on_game_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
