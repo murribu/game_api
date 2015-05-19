@@ -7,9 +7,9 @@ describe "Instantiating a game" do
     @user_auth_token = retrieve_access_token
   end
   
-  it "returns game info" do
+  it "returns game id" do
     post_with_token "/v1/guessing_games/1/start", {'options' => {'1' => '2'}}, {'Authorization' => @user_auth_token}
-    expect(response.body).to match(/"guessing_game_id"/)
+    expect(response.body).to match(/"id"/)
   end
   
   it "does not return the answer" do
