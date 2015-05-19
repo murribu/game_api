@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :user
+  #devise_for :user
   
   namespace :v1, defaults: { format: :json } do
     post  'login',                                    to: 'sessions#create'
