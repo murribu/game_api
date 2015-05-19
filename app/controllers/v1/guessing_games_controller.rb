@@ -25,5 +25,8 @@ module V1
       guessing_game_instance.save
       render json: {"id" => guessing_game_instance[:id].to_i}
     end
+    def guess
+      render json: {"result" => "incorrect"}
+    end
   end
 end
