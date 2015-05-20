@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Game Play" do
+describe "Starting a Guessing Game" do
   let!(:user) {User.create(email: "cory@awesomeness.com", password: "password1", password_confirmation: "password1")}
   
   before do
@@ -18,12 +18,29 @@ describe "Game Play" do
       expect(response.body).to_not match(/"answer"/)
     end
   end
-
+end
+  
+describe "Playing a Guessing Game" do
+  let!(:user) {User.create(email: "cory@awesomeness.com", password: "password1", password_confirmation: "password1")}
+  
+  before do
+    @user_auth_token = retrieve_access_token
+    @ggi_id = retrieve_guessing_game_instance_id(@user_auth_token)
+  end
+  
+  
   describe "Making an incorrect guess" do
     it "returns 'incorrect'" do
-      id = retrieve_guessing_game_instance_id(@user_auth_token)
-      post_with_token "/v1/guessing_game_instances/1/guess/#{id}", {'guess' => 999}, {'Authorization' => @user_auth_token}
+      post_with_token "/v1/guessing_game_instances/#{@ggi_id}/guess/", {'guess' => 999}, {'Authorization' => @user_auth_token}
       expect(response.body).to match(/"incorrect"/)
+    end
+  end
+    
+  describe "When using the Master Token, Requesting the answer" do
+    it "returns the answer" do
+      get_with_token "/v1/guessing_game_instances/#{@ggi_id}/answer", {}, {'Authorization' => Rails.application.secrets[:mastertoken]}
+      ggi = GuessingGameInstance.find(@ggi_id)
+      expect(response.body).to match(/"answer"/)
     end
   end
 end

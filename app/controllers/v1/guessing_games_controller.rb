@@ -25,8 +25,19 @@ module V1
       guessing_game_instance.save
       render json: {"id" => guessing_game_instance[:id].to_i}
     end
+    
     def guess
       render json: {"result" => "incorrect"}
+    end
+    
+    def answer
+      #Only a master token may see the answer
+      if @auth_token.scope = "master"
+        ggi = GuessingGameInstance.find(params[:instance_id])
+        render json: {"answer" => ggi.answer}
+      else
+        render json: {"error" => "unauthorized"}, status: 401
+      end
     end
   end
 end
