@@ -43,4 +43,12 @@ describe "Playing a Guessing Game" do
       expect(response.body).to match(/"answer"/)
     end
   end
+  
+  describe "Making a correct guess" do
+    it "returns 'correct'" do
+      ggi = GuessingGameInstance.find(@ggi_id)
+      post_with_token "/v1/guessing_game_instances/#{@ggi_id}/guess/", {'guess' => ggi.answer}, {'Authorization' => @user_auth_token}
+      expect(response.body).to match(/"correct"/)
+    end
+  end
 end

@@ -27,7 +27,14 @@ module V1
     end
     
     def guess
-      render json: {"result" => "incorrect"}
+      ggi = GuessingGameInstance.find(params[:instance_id])
+      if (params[:guess].to_i == ggi.answer)
+        ggi.active = false
+        ggi.save
+        render json: {"result" => "correct"}
+      else
+        render json: {"result" => "incorrect"}
+      end
     end
     
     def answer
