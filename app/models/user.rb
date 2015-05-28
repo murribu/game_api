@@ -5,4 +5,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :oauth_access_tokens
   has_many :guessing_game_instances
+  has_many :connect_instances
+  has_many :connect_players
 end

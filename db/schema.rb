@@ -11,10 +11,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518211540) do
+ActiveRecord::Schema.define(version: 20150528130423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "connect_instance_option_values", force: :cascade do |t|
+    t.integer "connect_option_id",   null: false
+    t.integer "connect_instance_id", null: false
+    t.string  "value"
+  end
+
+  add_index "connect_instance_option_values", ["connect_instance_id"], name: "index_connect_instance_option_values_on_connect_instance_id", using: :btree
+  add_index "connect_instance_option_values", ["connect_option_id"], name: "index_connect_instance_option_values_on_connect_option_id", using: :btree
+
+  create_table "connect_instance_state_bits", force: :cascade do |t|
+    t.integer "connect_instance_id", null: false
+    t.integer "x"
+    t.integer "y"
+    t.integer "z"
+    t.integer "connect_player_id"
+  end
+
+  add_index "connect_instance_state_bits", ["connect_instance_id"], name: "index_connect_instance_state_bits_on_connect_instance_id", using: :btree
+
+  create_table "connect_instances", force: :cascade do |t|
+    t.integer "user_id", null: false
+  end
+
+  add_index "connect_instances", ["user_id"], name: "index_connect_instances_on_user_id", using: :btree
+
+  create_table "connect_option_values", force: :cascade do |t|
+    t.integer "connect_option_id", null: false
+    t.string  "value",             null: false
+    t.boolean "is_default"
+  end
+
+  add_index "connect_option_values", ["connect_option_id"], name: "index_connect_option_values_on_connect_option_id", using: :btree
+
+  create_table "connect_options", force: :cascade do |t|
+    t.string "name",        default: "", null: false
+    t.string "option_type",              null: false
+  end
+
+  create_table "connect_players", force: :cascade do |t|
+    t.integer "connect_instance_id", null: false
+    t.string  "name"
+    t.boolean "winner"
+  end
+
+  add_index "connect_players", ["connect_instance_id"], name: "index_connect_players_on_connect_instance_id", using: :btree
 
   create_table "guessing_game_instance_option_values", force: :cascade do |t|
     t.integer  "guessing_game_instance_id",     null: false
