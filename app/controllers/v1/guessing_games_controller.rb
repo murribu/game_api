@@ -22,6 +22,7 @@ module V1
       end
       v = GuessingGameOptionValue.find(guessing_game_instance.guessing_game_instance_option_values.first[:guessing_game_option_value_id]).value.to_i
       guessing_game_instance.answer = rand(0..v)
+      guessing_game_instance.active = true
       guessing_game_instance.save
       render json: {"id" => guessing_game_instance[:id].to_i}
     end

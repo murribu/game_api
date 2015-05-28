@@ -45,10 +45,17 @@ describe "Playing a Guessing Game" do
   end
   
   describe "Making a correct guess" do
-    it "returns 'correct'" do
+    before do
       ggi = GuessingGameInstance.find(@ggi_id)
       post_with_token "/v1/guessing_game_instances/#{@ggi_id}/guess/", {'guess' => ggi.answer}, {'Authorization' => @user_auth_token}
+    end
+    it "returns 'correct'" do
       expect(response.body).to match(/"correct"/)
+    end
+    
+    it "marks the game as inactive" do
+      ggi = GuessingGameInstance.find(@ggi_id)
+      expect(ggi.active).to be(false)
     end
   end
 end
