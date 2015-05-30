@@ -10,10 +10,6 @@ o.guessing_game_option_values.create(:value => 10, :is_default => true)
 o.guessing_game_option_values.create(:value => 20)
 o.guessing_game_option_values.create(:value => 30)
 #----------Connect init
-co = ConnectOption.create(:name => "Players", :option_type => "integer")
-(1..4).each do |i|
-  co.connect_option_values.create(:value => i)
-end
 co = ConnectOption.create(:name => "Connect How Many?", :option_type => "integer")
 (3..7).each do |i|
   co.connect_option_values.create(:value => i, :is_default => 4.eql?(i))

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528130423) do
+ActiveRecord::Schema.define(version: 20150530174013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150528130423) do
 
   create_table "connect_instances", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.boolean "active"
   end
 
   add_index "connect_instances", ["user_id"], name: "index_connect_instances_on_user_id", using: :btree

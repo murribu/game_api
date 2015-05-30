@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     post  'guessing_games/:guessing_game_id/start',                to: 'guessing_games#start'
     post  'guessing_game_instances/:instance_id/guess',            to: 'guessing_games#guess'
     get   'guessing_game_instances/:instance_id/answer',            to: 'guessing_games#answer'
+    post  'connect/start', to: 'connect#start'
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
