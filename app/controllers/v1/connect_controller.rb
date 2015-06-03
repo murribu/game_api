@@ -18,5 +18,8 @@ module V1
       connect_instance.save
       render json: {"id" => connect_instance[:id].to_i}
     end
+    def move
+      render json: {"error" => "invalid move"}, status: 403
+    end
   end
 end
